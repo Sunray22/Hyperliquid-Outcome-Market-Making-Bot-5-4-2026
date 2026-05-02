@@ -164,20 +164,20 @@ they don't always.
 
 ```mermaid
 flowchart TB
-    subgraph Logical event
-      EV[OutcomeKey { BTC, 7821300¢, 2026-05-03T06:00Z, ≥ }]
+    subgraph LogicalEvent["Logical event"]
+      EV["OutcomeKey&#123; BTC, 7821300&cent;, 2026-05-03T06:00Z, &ge; &#125;"]
     end
-    EV --> A[HL OUT:BTC-78213-...-YES]
-    EV --> B[Polymarket condition_id 0xabc...]
-    EV --> C[Kalshi BTC_2026-05-03_78213_YES]
+    EV --> A["HL OUT:BTC-78213-...-YES"]
+    EV --> B["Polymarket condition_id 0xabc..."]
+    EV --> C["Kalshi BTC_2026-05-03_78213_YES"]
 
-    A -- 0.572 / 0.575 --> Q1[(quotes)]
+    A -- 0.572 / 0.575 --> Q1[("quotes")]
     B -- 0.561 / 0.564 --> Q1
     C -- 0.580 / 0.583 --> Q1
 
-    Q1 --> ARB{net edge ≥ min_edge_bps?}
-    ARB -- yes --> ACT[buy cheap leg<br/>sell rich leg]
-    ARB -- no  --> SKIP[wait]
+    Q1 --> ARB{"net edge &ge; min_edge_bps?"}
+    ARB -- yes --> ACT["buy cheap leg<br/>sell rich leg"]
+    ARB -- no  --> SKIP["wait"]
 ```
 
 The strategy iterates each tick:
@@ -342,13 +342,13 @@ the snapshot schema.
 
 ```mermaid
 flowchart LR
-    Q[Strategy quote] --> C{check}
-    C -->|kill switch?| K1[REJECT]
-    C -->|open orders > cap?| K2[REJECT]
-    C -->||q + Δq| > max?| RZ[RESIZE down]
-    C -->|drawdown > limit?| KILL[set kill switch + REJECT]
-    C -->|else| OK[PASS]
-    OK --> EX[connector → exchange]
+    Q["Strategy quote"] --> C{"check"}
+    C -- "kill switch?" --> K1["REJECT"]
+    C -- "open orders &gt; cap?" --> K2["REJECT"]
+    C -- "abs(q + &Delta;q) &gt; max?" --> RZ["RESIZE down"]
+    C -- "drawdown &gt; limit?" --> KILL["set kill switch + REJECT"]
+    C -- "else" --> OK["PASS"]
+    OK --> EX["connector &rarr; exchange"]
     RZ --> EX
 ```
 
